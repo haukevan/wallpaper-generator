@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.iphone13ProMax {
+  width: 1284px;
+  height: 2778px;
+  /*
+  height: 100svh;
+  width: 100svw;
+  */
+  overflow: hidden;
+  background: black;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 140px;
+  transform: scale(1);
+  overflow: hidden;
+}
+
+.widgets {
+  box-sizing: border-box;
+  position: absolute;
+  overflow: hidden;
+  top: 243px;
+  width: calc(100% - 42px);
+  height: 93px;
+  background: green;
+  border-radius: 20px;
+  opacity: 1;
+}
+
+.bkg-img {
+  height: 100%;
+  width: auto;
+}
+
+.uploadButton {
+  @apply duration-200;
+}
+
+.uploadButton:hover {
+  @apply bg-emerald-950 duration-200;
+}

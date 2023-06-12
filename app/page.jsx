@@ -66,6 +66,16 @@ export default function Home() {
       (phoneSelected) => phoneSelected.id === phone
     ).height;
 
+    ////////////
+    //set styles back for UI viewing
+    exportImage.style.width = phoneList.find(
+      (phoneSelected) => phoneSelected.id === "iphone13Default"
+    ).width;
+    exportImage.style.height = phoneList.find(
+      (phoneSelected) => phoneSelected.id === "iphone13Default"
+    ).height;
+    //////////
+
     console.log("1st: " + newImage);
 
     //save image

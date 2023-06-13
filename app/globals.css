@@ -14,6 +14,11 @@
   opacity: 1;
 }
 
+.buildImage {
+  height: auto;
+  width: 80%;
+}
+
 .bkg-img {
   height: 100%;
   width: auto;
@@ -22,6 +27,30 @@
 .save-img {
   height: 100%;
   width: 100%;
+}
+
+.saveImageBox {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
+  visibility: hidden;
+}
+
+.saveImageBoxHeader {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  height: fit-content;
+  font-size: xx-large;
+  color: white;
+  padding: 10px;
 }
 
 .uploadButton {

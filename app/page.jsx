@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import exportAsImage from "../utils/exportAsImage";
-import { createElement } from "react";
 import { SketchPicker } from "react-color";
 
 import Image from "next/image";
@@ -18,12 +17,12 @@ export default function Home() {
   //upload image state holder from user
   const [image, setImage] = useState(null);
   const [phone, setPhone] = useState(null);
-  const [background, setBackground] = useState("#fff");
+  const [background, setBackground] = useState("");
   const [newImage, setnewImage] = useState(null);
 
-  useEffect(() => {
-    console.log("new Image: " + newImage);
-  }, [newImage]);
+  // useEffect(() => {
+  //   console.log("new Image: " + newImage);
+  // }, [newImage]);
 
   //iphone stats
   const phoneList = [
@@ -34,8 +33,10 @@ export default function Home() {
     },
     {
       id: "iphone13ProMax",
-      width: "1284px",
-      height: "2778px",
+      // width: "1284px",
+      // height: "2778px",
+      width: "428px",
+      height: "926px",
     },
   ];
 
@@ -66,22 +67,10 @@ export default function Home() {
       (phoneSelected) => phoneSelected.id === phone
     ).height;
 
-    ////////////
-    //set styles back for UI viewing
-    exportImage.style.width = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
-    ).width;
-    exportImage.style.height = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
-    ).height;
-    //////////
+    console.log("width:" + exportImage.style.width);
 
-    console.log("1st: " + newImage);
-
-    //save image
+    //save image as objectURL and set to newImage, this will be updated on the newImage displayer
     setnewImage(await exportAsImage(exportRef.current, "test"));
-
-    console.log("2nd: " + newImage);
 
     //set styles back for UI viewing
     exportImage.style.width = phoneList.find(
@@ -106,6 +95,7 @@ export default function Home() {
     }
   };
 
+  //updates selected phone on change
   const handleChangePhone = (event) => {
     setPhone((currentPhone) => event.target.value);
   };
@@ -188,13 +178,7 @@ export default function Home() {
         onChangeComplete={handleChangeComplete}
       />
       {newImage ? (
-        <img
-          width="200"
-          height="200"
-          alt=""
-          src={newImage}
-          className="bkg-img"
-        />
+        <img alt="" src={newImage} className="save-img" />
       ) : (
         <img
           width="200"

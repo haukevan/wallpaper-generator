@@ -2,24 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.iphone13ProMax {
-  width: 1284px;
-  height: 2778px;
-  /*
-  height: 100svh;
-  width: 100svw;
-  */
-  overflow: hidden;
-  background: black;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 140px;
-  transform: scale(1);
-  overflow: hidden;
-}
-
 .widgets {
   box-sizing: border-box;
   position: absolute;
@@ -35,6 +17,11 @@
 .bkg-img {
   height: 100%;
   width: auto;
+}
+
+.save-img {
+  height: 100%;
+  width: 100%;
 }
 
 .uploadButton {

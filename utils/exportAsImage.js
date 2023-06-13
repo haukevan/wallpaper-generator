@@ -18,13 +18,13 @@ const exportAsImage = async (element, imageFileName) => {
 
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
-  console.log(image);
 
   //downloadImage(image, imageFileName);
 
   html.style.width = null;
   body.style.width = null;
 
+  //return image for display to user as image
   return image;
 };
 

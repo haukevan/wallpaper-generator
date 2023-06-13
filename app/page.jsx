@@ -53,9 +53,12 @@ export default function Home() {
     ).height;
   });
 
+  useEffect(() => {
+    document.getElementById("widgets").style.background = background;
+  }, [background]);
+
   const handleChangeComplete = (color) => {
     setBackground(color.hex);
-    document.getElementById("widgets").style.background = background;
   };
 
   const handleUploadClick = () => {
@@ -145,6 +148,15 @@ export default function Home() {
     document.querySelector("[data-modal]").close();
   };
 
+  //design menus
+  const openDesignBottom = () => {
+    document.getElementById("designBoxBottom").style.visibility = "visible";
+  };
+
+  const closeDesignBoxBottom = () => {
+    document.getElementById("designBoxBottom").style.visibility = "hidden";
+  };
+
   //-----------------------RETURN----------------------------//
 
   return (
@@ -188,15 +200,9 @@ export default function Home() {
             id="output"
           ></div>
         ) : (
-          <img
-            width="200"
-            height="200"
-            alt=""
-            src="/assets/images/iphone13.png"
-            className="bkg-img"
-          />
+          <div className="bkg-img" id="output"></div>
         )}
-        <div className="widgets" id="widgets"></div>
+        <div className="widgets" id="widgets" onClick={openDesignBottom}></div>
       </div>
       <button onClick={prepareImage}>Capture Image</button>
       <select
@@ -211,19 +217,33 @@ export default function Home() {
         <option value="13pro">iPhone 13 Pro</option>
         <option value="iphone13ProMax">iPhone 13 Pro Max</option>
       </select>
-      <button id="leftBtn" onClick={alignClick}>
-        Left
-      </button>
-      <button id="centerBtn" onClick={alignClick}>
-        Center
-      </button>
-      <button id="rightBtn" onClick={alignClick}>
-        Right
-      </button>
-      <SketchPicker
-        color={background}
-        onChangeComplete={handleChangeComplete}
-      />
+
+      {/* Design Menu to open up bottom up or top down for elements */}
+      <div className="designBoxBottom" id="designBoxBottom">
+        <div className=" flex flex-row align-middle justify-between">
+          <div>Menu Area</div>
+          <div id="closeDesignBoxBottom" onClick={closeDesignBoxBottom}>
+            Close
+          </div>
+        </div>
+        <div className=" flex justify-center align-middle flex-col">
+          <button id="leftBtn" onClick={alignClick}>
+            Left
+          </button>
+          <button id="centerBtn" onClick={alignClick}>
+            Center
+          </button>
+          <button id="rightBtn" onClick={alignClick}>
+            Right
+          </button>
+          <SketchPicker
+            color={background}
+            onChangeComplete={handleChangeComplete}
+          />
+        </div>
+      </div>
+
+      {/* Save box that will pop up fixed ontop of design area */}
       <div id="saveImageBox" className="saveImageBox">
         <div className="saveImageBoxHeader">
           <div onClick={closeSavePreview}>Close</div>
@@ -231,17 +251,19 @@ export default function Home() {
             Help
           </div>
         </div>
-        {newImage ? (
-          <img id="" alt="" src={newImage} className="save-img" />
-        ) : (
-          <img
-            width="200"
-            height="200"
-            alt=""
-            src="/assets/images/iphone13.png"
-            className="bkg-img"
-          />
-        )}
+        <div className="saveImagePhone">
+          {newImage ? (
+            <img id="" alt="" src={newImage} className="save-img" />
+          ) : (
+            <img
+              width="200"
+              height="200"
+              alt=""
+              src="/assets/images/iphone13.png"
+              className="bkg-img"
+            />
+          )}
+        </div>
       </div>
       <dialog data-modal>
         <div>Modals</div>

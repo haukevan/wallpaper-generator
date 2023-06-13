@@ -21,7 +21,9 @@
 
 .bkg-img {
   height: 100%;
-  width: auto;
+  width: 100%;
+  background: black;
+  border-radius: 50px;
 }
 
 .save-img {
@@ -41,6 +43,7 @@
   flex-direction: column;
   background: white;
   visibility: hidden;
+  overflow: hidden;
 }
 
 .saveImageBoxHeader {
@@ -49,8 +52,33 @@
   top: 0;
   height: fit-content;
   font-size: xx-large;
-  color: white;
+  color: black;
+  background: rgba(255, 255, 255, 0.499);
   padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.saveImagePhone {
+  width: auto;
+  height: fit-content;
+  overflow: scroll;
+}
+
+.designBoxBottom {
+  width: 100%;
+  height: 30%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  bottom: 0;
+  left: 0;
+  background: rgb(109, 109, 109);
+  color: white;
+  visibility: hidden;
 }
 
 .uploadButton {

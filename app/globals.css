@@ -81,6 +81,20 @@
   visibility: hidden;
 }
 
+/* Radio Buttons for Menu */
+.radio_item {
+  display: none !important;
+}
+
+.label_item {
+  opacity: 0.35;
+  padding: 10px;
+}
+
+.radio_item:checked + label {
+  opacity: 1;
+}
+
 .uploadButton {
   @apply duration-200;
 }

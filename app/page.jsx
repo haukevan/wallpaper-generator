@@ -273,11 +273,11 @@ export default function Home() {
           <option value="iphone13Mini">iPhone 13 Mini</option>
         </select>
       </form>
-      <div className=" relative w-full h-full flex align-middle justify-center">
+      <div className=" relative w-full h-full flex justify-center align-middle">
         <div
           ref={exportRef}
           id="exportImage"
-          className="buildImage absolute top-1/2 transform -translate-y-1/2 flex align-middle justify-center rounded-3xl"
+          className="buildImage absolute top-0 flex align-middle justify-center rounded-3xl"
         >
           {image ? (
             <div

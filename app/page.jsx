@@ -28,7 +28,7 @@ export default function Home() {
   const [background, setBackground] = useState("rbga(0, 0, 0, 0)");
   const [newImage, setnewImage] = useState(null);
   const [menuSelect, setmenuSelect] = useState(0); //default no show items
-  const [menuText, setmenuText] = useState("Editor");
+  const [menuText, setmenuText] = useState("Select below to edit");
 
   //iphone stats
   const phoneList = [
@@ -45,28 +45,28 @@ export default function Home() {
       id: "iphone13Mini",
       width: "1125px",
       height: "2436px",
-      topWidgets: "243px",
-      widgetWidth: "386px",
-      widgetHeight: "93px",
-      widgetBorderRadius: "20px",
+      topWidgets: "729px",
+      widgetWidth: "1000px",
+      widgetHeight: "279px",
+      widgetBorderRadius: "60px",
     },
     {
       id: "iphone13",
       width: "1170px",
       height: "2532px",
-      topWidgets: "243px",
-      widgetWidth: "386px",
-      widgetHeight: "93px",
-      widgetBorderRadius: "20px",
+      topWidgets: "729px",
+      widgetWidth: "1000px",
+      widgetHeight: "279px",
+      widgetBorderRadius: "60px",
     },
     {
       id: "iphone13Pro",
       width: "1170px",
       height: "2532px",
-      topWidgets: "243px",
-      widgetWidth: "386px",
-      widgetHeight: "93px",
-      widgetBorderRadius: "20px",
+      topWidgets: "729px",
+      widgetWidth: "1000x",
+      widgetHeight: "279px",
+      widgetBorderRadius: "60px",
     },
     {
       id: "iphone13ProMax",
@@ -158,20 +158,20 @@ export default function Home() {
     console.log("width:" + exportImage.style.width);
     console.log("height:" + exportImage.style.height);
 
-    // //save image as objectURL and set to newImage, this will be updated on the newImage displayer
-    // setnewImage(await exportAsImage(exportRef.current, "test"));
+    //save image as objectURL and set to newImage, this will be updated on the newImage displayer
+    setnewImage(await exportAsImage(exportRef.current, "test"));
 
-    // document.getElementById("saveImageBox").style.visibility = "visible";
+    document.getElementById("saveImageBox").style.visibility = "visible";
 
-    // //set styles back for UI viewing
-    // exportImage.style.width = phoneList.find(
-    //   (phoneSelected) => phoneSelected.id === "iphone13Default"
-    // ).width;
-    // exportImage.style.height = phoneList.find(
-    //   (phoneSelected) => phoneSelected.id === "iphone13Default"
-    // ).height;
-    // exportWidget.style.border = "1px solid white";
-    // exportWidget.innerHTML = "select to edit";
+    //set styles back for UI viewing
+    exportImage.style.width = phoneList.find(
+      (phoneSelected) => phoneSelected.id === "iphone13Default"
+    ).width;
+    exportImage.style.height = phoneList.find(
+      (phoneSelected) => phoneSelected.id === "iphone13Default"
+    ).height;
+    exportWidget.style.border = "1px solid white";
+    exportWidget.innerHTML = "select to edit";
   };
 
   const alignClick = (e) => {
@@ -233,7 +233,7 @@ export default function Home() {
       >
         <div className=" flex flex-row justify-center align-middle p-1">
           <div
-            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100"
             onClick={handleUploadClick}
           >
             <Image
@@ -252,7 +252,7 @@ export default function Home() {
             />
           </div>
           <input
-            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 text-xl font-normal"
             onClick={prepareImage}
             type="submit"
             value={"Download"}
@@ -277,7 +277,7 @@ export default function Home() {
         <div
           ref={exportRef}
           id="exportImage"
-          className="buildImage overflow-scroll absolute top-1/2 transform -translate-y-1/2 flex align-middle justify-center rounded-3xl"
+          className="buildImage absolute top-1/2 transform -translate-y-1/2 flex align-middle justify-center rounded-3xl"
         >
           {image ? (
             <div

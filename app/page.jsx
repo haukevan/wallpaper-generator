@@ -28,17 +28,18 @@ export default function Home() {
   const [background, setBackground] = useState("rbga(0, 0, 0, 0)");
   const [newImage, setnewImage] = useState(null);
   const [menuSelect, setmenuSelect] = useState(0); //default no show items
+  const [menuText, setmenuText] = useState("Editor");
 
   //iphone stats --NOTE: image dimensions are multiplied by 3 when using dataURL objects
   const phoneList = [
     {
       id: "iphone13Default",
-      width: "428px",
-      height: "926px",
-      topWidgets: "243px",
-      widgetWidth: "386px",
-      widgetHeight: "93px",
-      widgetBorderRadius: "20px",
+      width: "285px",
+      height: "617px",
+      topWidgets: "162px",
+      widgetWidth: "257px",
+      widgetHeight: "62px",
+      widgetBorderRadius: "13px",
     },
     {
       id: "iphone13ProMax",
@@ -54,12 +55,26 @@ export default function Home() {
   //set initial scale of preview phone on load
   useEffect(() => {
     const exportImage = document.getElementById("exportImage");
+    const exportWidget = document.getElementById("widgets");
+
     exportImage.style.width = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
     ).width;
     exportImage.style.height = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
     ).height;
+    exportWidget.style.top = phoneList.find(
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
+    ).topWidgets;
+    exportWidget.style.width = phoneList.find(
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
+    ).widgetWidth;
+    exportWidget.style.height = phoneList.find(
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
+    ).widgetHeight;
+    exportWidget.style.borderRadius = phoneList.find(
+      (phoneDefault) => phoneDefault.id === "iphone13Default"
+    ).widgetBorderRadius;
   });
 
   useEffect(() => {
@@ -85,6 +100,8 @@ export default function Home() {
   };
 
   const prepareImage = async () => {
+    console.log("in prep");
+
     //set full resolution styles before export, then set back to original for preview
     const exportImage = document.getElementById("exportImage");
 
@@ -110,6 +127,8 @@ export default function Home() {
     exportWidget.style.borderRadius = phoneList.find(
       (phoneSelected) => phoneSelected.id === phone
     ).widgetBorderRadius;
+    exportWidget.style.border = 0;
+    exportWidget.innerHTML = null;
 
     console.log("width:" + exportImage.style.width);
 
@@ -125,6 +144,8 @@ export default function Home() {
     exportImage.style.height = phoneList.find(
       (phoneSelected) => phoneSelected.id === "iphone13Default"
     ).height;
+    exportWidget.style.border = "1px solid white";
+    exportWidget.innerHTML = "select to edit";
   };
 
   const alignClick = (e) => {
@@ -161,61 +182,70 @@ export default function Home() {
 
   //design menus
   const openDesignBottom = () => {
-    document.getElementById("designBoxBottom").style.visibility = "visible";
+    document.getElementById("designBoxBottom").style.bottom = "0";
   };
 
   const closeDesignBoxBottom = () => {
-    document.getElementById("designBoxBottom").style.visibility = "hidden";
+    document.getElementById("designBoxBottom").style.bottom = "-400px";
   };
 
   const menuSelectHandler = (selected) => {
     setmenuSelect(selected);
+    setmenuText(selected);
   };
 
   //-----------------------RETURN----------------------------//
 
   return (
-    <main className=" relative gap-2 w-full h-fit overflow-hidden flex flex-col items-center justify-start bg-gradient-to-b from-blue-600 to-cyan-600">
+    <main className=" relative gap-2 w-screen h-screen overflow-hidden flex flex-col items-center justify-start bg-gradient-to-b from-blue-600 to-cyan-600">
       <h1 className=" text-white text-4xl pt-2">Wallpaper Creator</h1>
-      <div className=" flex flex-row justify-center align-middle p-1">
-        <div
-          className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
-          onClick={handleUploadClick}
-        >
-          <Image
-            className="uploadImage"
-            priority
-            src={upload}
-            alt="Upload an image"
-          />
-          <h3 className=" text-xl font-normal">Upload</h3>
-          <input
-            type="file"
-            onChange={onImageChange}
-            className="filetype"
-            ref={inputRef}
-            style={{ display: "none" }}
-          />
-        </div>
-        <div
-          className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
-          onClick={prepareImage}
-        >
-          <h3 className=" text-xl font-normal">Download</h3>
-        </div>
-      </div>
-      <select
-        onChange={handleChangePhone}
-        id="phoneSelect"
-        defaultValue={"select"}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className=" flex flex-col justify-center align-middle p-1"
       >
-        <option value="select" disabled>
-          Phone Model
-        </option>
-        <option value="13reg">iPhone 13</option>
-        <option value="13pro">iPhone 13 Pro</option>
-        <option value="iphone13ProMax">iPhone 13 Pro Max</option>
-      </select>
+        <div className=" flex flex-row justify-center align-middle p-1">
+          <div
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
+            onClick={handleUploadClick}
+          >
+            <Image
+              className="uploadImage"
+              priority
+              src={upload}
+              alt="Upload an image"
+            />
+            <h3 className=" text-xl font-normal">Upload</h3>
+            <input
+              type="file"
+              onChange={onImageChange}
+              className="filetype"
+              ref={inputRef}
+              style={{ display: "none" }}
+            />
+          </div>
+          <input
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 font-bold font-medium"
+            onClick={prepareImage}
+            type="submit"
+            value={"Download"}
+          ></input>
+        </div>
+        <select
+          onChange={handleChangePhone}
+          id="phoneSelect"
+          defaultValue={""}
+          required
+        >
+          <option value="" disabled>
+            Phone Model
+          </option>
+          <option value="13reg">iPhone 13</option>
+          <option value="13pro">iPhone 13 Pro</option>
+          <option value="iphone13ProMax">iPhone 13 Pro Max</option>
+        </select>
+      </form>
       <div
         ref={exportRef}
         id="exportImage"
@@ -237,20 +267,28 @@ export default function Home() {
         ) : (
           <div className="bkg-img" id="output"></div>
         )}
-        <div className="widgets" id="widgets" onClick={openDesignBottom}></div>
+        <div className="widgets" id="widgets" onClick={openDesignBottom}>
+          select to edit
+        </div>
       </div>
 
       {/* Design Menu to open up bottom up or top down for elements */}
       <div className="designBoxBottom" id="designBoxBottom">
         <div className=" flex flex-row align-middle justify-between">
-          <div>Menu Area</div>
-          <div id="closeDesignBoxBottom" onClick={closeDesignBoxBottom}>
+          <div className=" absolute top-5 left-1/2 transform -translate-x-1/2">
+            {menuText}
+          </div>
+          <div
+            className=" absolute top-5 right-5"
+            id="closeDesignBoxBottom"
+            onClick={closeDesignBoxBottom}
+          >
             <Image src={close} alt="Close design menu" />
           </div>
         </div>
         <div
           id="menuSelect"
-          className=" flex flex-row align-middle justify-center p-2"
+          className=" flex flex-row align-middle justify-center p-2 absolute top-10 left-1/2 transform -translate-x-1/2"
         >
           <input
             type="radio"
@@ -258,10 +296,10 @@ export default function Home() {
             value="AlignImage"
             name="item"
             id="radio1"
-            checked={menuSelect === 1}
-            onClick={(e) => menuSelectHandler(1)}
+            checked={menuSelect === "Align Image"}
+            onChange={(e) => menuSelectHandler("Align Image")}
           />
-          <label className="label_item" for="radio1">
+          <label className="label_item" htmlFor="radio1">
             <Image src={align} alt="Align image" />
           </label>
           <input
@@ -270,10 +308,10 @@ export default function Home() {
             value="SelectColor"
             name="item"
             id="radio2"
-            checked={menuSelect === 2}
-            onClick={(e) => menuSelectHandler(2)}
+            checked={menuSelect === "Select Color"}
+            onChange={(e) => menuSelectHandler("Select Color")}
           />
-          <label className="label_item" for="radio2">
+          <label className="label_item" htmlFor="radio2">
             <Image src={palette} alt="Pick color" />
           </label>
           <input
@@ -282,14 +320,14 @@ export default function Home() {
             value="BorderRadius"
             name="item"
             id="radio3"
-            checked={menuSelect === 3}
-            onClick={(e) => menuSelectHandler(3)}
+            checked={menuSelect === "Border Radius"}
+            onChange={(e) => menuSelectHandler("Border Radius")}
           />
-          <label className="label_item" for="radio3">
+          <label className="label_item" htmlFor="radio3">
             <Image src={borderRadius} alt="Border Radius" />
           </label>
         </div>
-        {menuSelect === 1 && (
+        {menuSelect === "Align Image" && (
           <div className=" flex justify-center align-middle flex-row">
             <div onClick={alignClick}>
               <Image id="leftBtn" src={leftJustify} alt="Align image left" />
@@ -306,8 +344,8 @@ export default function Home() {
             </div>
           </div>
         )}
-        {menuSelect === 2 && (
-          <div>
+        {menuSelect === "Select Color" && (
+          <div className=" w-full h-1/4 flex justify-center align-bottom">
             <ChromePicker
               width={"200px"}
               color={background}
@@ -315,7 +353,11 @@ export default function Home() {
             />
           </div>
         )}
-        {menuSelect === 3 && <div>Border Radius Selector</div>}
+        {menuSelect === "Border Radius" && (
+          <div className=" flex justify-center align-middle flex-row">
+            Border Radius Selector
+          </div>
+        )}
       </div>
 
       {/* Save box that will pop up fixed ontop of design area */}
@@ -341,7 +383,13 @@ export default function Home() {
         </div>
       </div>
       <dialog data-modal>
-        <div>Modals</div>
+        <h2>Mobile</h2>
+        <li>Press and hold on image</li>
+        <li>Select `save to photos` option</li>
+        <li>Navigate to saved photo and set to wallpaper</li>
+        <h2>Desktop</h2>
+        <li>Right click on image</li>
+        <li>Choose `save image as` option</li>
         <button data-close-modal onClick={closeHelpModal}>
           Close
         </button>

@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 .widgets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
   position: absolute;
   overflow: hidden;
-  top: 243px;
-  width: calc(100% - 42px);
-  height: 93px;
-  background: green;
-  border-radius: 20px;
-  opacity: 1;
+  background: rgba(75, 75, 75, 0.843);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: blinker 2s linear infinite;
 }
 
 .buildImage {
@@ -68,17 +69,19 @@
 
 .designBoxBottom {
   width: 100%;
-  height: 30%;
+  height: 350px;
   position: fixed;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  bottom: 0;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  bottom: -400px;
   left: 0;
   background: rgb(109, 109, 109);
   color: white;
-  visibility: hidden;
+  transition: 200ms ease-in;
 }
 
 /* Radio Buttons for Menu */
@@ -101,4 +104,11 @@
 
 .uploadButton:hover {
   @apply bg-emerald-950 duration-200;
+}
+
+@keyframes blinker {
+  50% {
+    color: rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
+  }
 }

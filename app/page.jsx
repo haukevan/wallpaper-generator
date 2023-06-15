@@ -30,7 +30,7 @@ export default function Home() {
   const [menuSelect, setmenuSelect] = useState(0); //default no show items
   const [menuText, setmenuText] = useState("Editor");
 
-  //iphone stats --NOTE: image dimensions are multiplied by 3 when using dataURL objects
+  //iphone stats
   const phoneList = [
     {
       id: "iphone13Default",
@@ -42,13 +42,40 @@ export default function Home() {
       widgetBorderRadius: "13px",
     },
     {
-      id: "iphone13ProMax",
-      width: "428px", //"1284px"
-      height: "926px", // "2778px"
+      id: "iphone13Mini",
+      width: "1125px",
+      height: "2436px",
       topWidgets: "243px",
       widgetWidth: "386px",
       widgetHeight: "93px",
       widgetBorderRadius: "20px",
+    },
+    {
+      id: "iphone13",
+      width: "1170px",
+      height: "2532px",
+      topWidgets: "243px",
+      widgetWidth: "386px",
+      widgetHeight: "93px",
+      widgetBorderRadius: "20px",
+    },
+    {
+      id: "iphone13Pro",
+      width: "1170px",
+      height: "2532px",
+      topWidgets: "243px",
+      widgetWidth: "386px",
+      widgetHeight: "93px",
+      widgetBorderRadius: "20px",
+    },
+    {
+      id: "iphone13ProMax",
+      width: "1284px",
+      height: "2778px",
+      topWidgets: "729px",
+      widgetWidth: "1158px",
+      widgetHeight: "279px",
+      widgetBorderRadius: "60px",
     },
   ];
 
@@ -100,8 +127,6 @@ export default function Home() {
   };
 
   const prepareImage = async () => {
-    console.log("in prep");
-
     //set full resolution styles before export, then set back to original for preview
     const exportImage = document.getElementById("exportImage");
 
@@ -131,21 +156,22 @@ export default function Home() {
     exportWidget.innerHTML = null;
 
     console.log("width:" + exportImage.style.width);
+    console.log("height:" + exportImage.style.height);
 
-    //save image as objectURL and set to newImage, this will be updated on the newImage displayer
-    setnewImage(await exportAsImage(exportRef.current, "test"));
+    // //save image as objectURL and set to newImage, this will be updated on the newImage displayer
+    // setnewImage(await exportAsImage(exportRef.current, "test"));
 
-    document.getElementById("saveImageBox").style.visibility = "visible";
+    // document.getElementById("saveImageBox").style.visibility = "visible";
 
-    //set styles back for UI viewing
-    exportImage.style.width = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
-    ).width;
-    exportImage.style.height = phoneList.find(
-      (phoneSelected) => phoneSelected.id === "iphone13Default"
-    ).height;
-    exportWidget.style.border = "1px solid white";
-    exportWidget.innerHTML = "select to edit";
+    // //set styles back for UI viewing
+    // exportImage.style.width = phoneList.find(
+    //   (phoneSelected) => phoneSelected.id === "iphone13Default"
+    // ).width;
+    // exportImage.style.height = phoneList.find(
+    //   (phoneSelected) => phoneSelected.id === "iphone13Default"
+    // ).height;
+    // exportWidget.style.border = "1px solid white";
+    // exportWidget.innerHTML = "select to edit";
   };
 
   const alignClick = (e) => {
@@ -197,7 +223,7 @@ export default function Home() {
   //-----------------------RETURN----------------------------//
 
   return (
-    <main className=" relative gap-2 w-screen h-screen overflow-hidden flex flex-col items-center justify-start bg-gradient-to-b from-blue-600 to-cyan-600">
+    <main className=" relative gap-2 overflow-scroll w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-b from-blue-600 to-cyan-600">
       <h1 className=" text-white text-4xl pt-2">Wallpaper Creator</h1>
       <form
         onSubmit={(e) => {
@@ -241,34 +267,35 @@ export default function Home() {
           <option value="" disabled>
             Phone Model
           </option>
-          <option value="13reg">iPhone 13</option>
-          <option value="13pro">iPhone 13 Pro</option>
           <option value="iphone13ProMax">iPhone 13 Pro Max</option>
+          <option value="iphone13Pro">iPhone 13 Pro</option>
+          <option value="iphone13">iPhone 13</option>
+          <option value="iphone13Mini">iPhone 13 Mini</option>
         </select>
       </form>
-      <div
-        ref={exportRef}
-        id="exportImage"
-        className="buildImage w-[428px] h-[926px] overflow-hidden relative flex align-middle justify-center rounded-3xl"
-      >
-        {image ? (
-          <div
-            style={{
-              backgroundImage: `url(${URL.createObjectURL(image)})`,
-              width: "100%",
-              height: "100%",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-            }}
-            className="bkg-img"
-            id="output"
-          ></div>
-        ) : (
-          <div className="bkg-img" id="output"></div>
-        )}
-        <div className="widgets" id="widgets" onClick={openDesignBottom}>
-          select to edit
+      <div className=" relative w-full h-full flex align-middle justify-center">
+        <div
+          ref={exportRef}
+          id="exportImage"
+          className="buildImage overflow-scroll absolute top-1/2 transform -translate-y-1/2 flex align-middle justify-center rounded-3xl"
+        >
+          {image ? (
+            <div
+              style={{
+                backgroundImage: `url(${URL.createObjectURL(image)})`,
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+              }}
+              className="bkg-img"
+              id="output"
+            ></div>
+          ) : (
+            <div className="bkg-img" id="output"></div>
+          )}
+          <div className="widgets" id="widgets" onClick={openDesignBottom}>
+            select to edit
+          </div>
         </div>
       </div>
 

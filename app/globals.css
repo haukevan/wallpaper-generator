@@ -9,15 +9,14 @@
   color: rgba(255, 255, 255, 0.5);
   box-sizing: border-box;
   position: absolute;
-  overflow: hidden;
   background: rgba(75, 75, 75, 0.843);
   border: 1px solid rgba(255, 255, 255, 0.5);
   animation: blinker 2s linear infinite;
 }
 
 .buildImage {
-  height: auto;
-  width: 80%;
+  height: 100%;
+  width: auto;
 }
 
 .bkg-img {
@@ -62,7 +61,7 @@
 }
 
 .saveImagePhone {
-  width: auto;
+  width: fit-content;
   height: fit-content;
   overflow: scroll;
 }

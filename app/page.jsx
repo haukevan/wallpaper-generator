@@ -21,6 +21,7 @@ export default function Home() {
 
   //upload image click ref
   const inputRef = useRef(null);
+  const uploadRef = useRef(null);
 
   //upload image state holder from user
   const [image, setImage] = useState(null);
@@ -29,6 +30,7 @@ export default function Home() {
   const [newImage, setnewImage] = useState(null);
   const [menuSelect, setmenuSelect] = useState(0); //default no show items
   const [menuText, setmenuText] = useState("Select below to edit");
+  const [borderSize, setborderSize] = useState(null);
 
   //iphone stats
   const phoneList = [
@@ -39,7 +41,9 @@ export default function Home() {
       topWidgets: "162px",
       widgetWidth: "257px",
       widgetHeight: "62px",
-      widgetBorderRadius: "13px",
+      widgetBorderRadiusSmall: "5px",
+      widgetBorderRadiusMedium: "13px",
+      widgetBorderRadiusLarge: "25px",
     },
     {
       id: "iphone13Mini",
@@ -48,7 +52,9 @@ export default function Home() {
       topWidgets: "729px",
       widgetWidth: "1000px",
       widgetHeight: "279px",
-      widgetBorderRadius: "60px",
+      widgetBorderRadiusSmall: "5px",
+      widgetBorderRadiusMedium: "13px",
+      widgetBorderRadiusLarge: "25px",
     },
     {
       id: "iphone13",
@@ -57,7 +63,9 @@ export default function Home() {
       topWidgets: "729px",
       widgetWidth: "1000px",
       widgetHeight: "279px",
-      widgetBorderRadius: "60px",
+      widgetBorderRadiusSmall: "5px",
+      widgetBorderRadiusMedium: "13px",
+      widgetBorderRadiusLarge: "25px",
     },
     {
       id: "iphone13Pro",
@@ -66,7 +74,9 @@ export default function Home() {
       topWidgets: "729px",
       widgetWidth: "1000x",
       widgetHeight: "279px",
-      widgetBorderRadius: "60px",
+      widgetBorderRadiusSmall: "5px",
+      widgetBorderRadiusMedium: "13px",
+      widgetBorderRadiusLarge: "25px",
     },
     {
       id: "iphone13ProMax",
@@ -75,7 +85,9 @@ export default function Home() {
       topWidgets: "729px",
       widgetWidth: "1158px",
       widgetHeight: "279px",
-      widgetBorderRadius: "60px",
+      widgetBorderRadiusSmall: "23px", //4.6 increase from default
+      widgetBorderRadiusMedium: "60px",
+      widgetBorderRadiusLarge: "115px",
     },
   ];
 
@@ -99,9 +111,6 @@ export default function Home() {
     exportWidget.style.height = phoneList.find(
       (phoneDefault) => phoneDefault.id === "iphone13Default"
     ).widgetHeight;
-    exportWidget.style.borderRadius = phoneList.find(
-      (phoneDefault) => phoneDefault.id === "iphone13Default"
-    ).widgetBorderRadius;
   });
 
   useEffect(() => {
@@ -118,6 +127,10 @@ export default function Home() {
     inputRef.current.click();
   };
 
+  const handleDownloadClick = () => {
+    uploadRef.current.click();
+  };
+
   //set image selected to screen background
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -129,6 +142,7 @@ export default function Home() {
   const prepareImage = async () => {
     //set full resolution styles before export, then set back to original for preview
     const exportImage = document.getElementById("exportImage");
+    const borderRad = `widgetBorderRadius${borderSize}`;
 
     //set wallpaper image dimensions
     exportImage.style.width = phoneList.find(
@@ -151,7 +165,8 @@ export default function Home() {
     ).widgetHeight;
     exportWidget.style.borderRadius = phoneList.find(
       (phoneSelected) => phoneSelected.id === phone
-    ).widgetBorderRadius;
+    )[borderRad]; //[] to send variable as prop
+
     exportWidget.style.border = 0;
     exportWidget.innerHTML = null;
 
@@ -170,6 +185,9 @@ export default function Home() {
     exportImage.style.height = phoneList.find(
       (phoneSelected) => phoneSelected.id === "iphone13Default"
     ).height;
+    exportWidget.style.borderRadius = phoneList.find(
+      (phoneSelected) => phoneSelected.id === "iphone13Default"
+    )[borderRad];
     exportWidget.style.border = "1px solid white";
     exportWidget.innerHTML = "select to edit";
   };
@@ -184,6 +202,29 @@ export default function Home() {
         break;
       case "rightBtn":
         document.getElementById("output").style.backgroundPosition = "right";
+        break;
+    }
+  };
+
+  const borderResize = (e) => {
+    switch (e.target.id) {
+      case "smallBtn":
+        document.getElementById("widgets").style.borderRadius = phoneList.find(
+          (phoneSelected) => phoneSelected.id === "iphone13Default"
+        ).widgetBorderRadiusSmall;
+        setborderSize("Small");
+        break;
+      case "mediumBtn":
+        document.getElementById("widgets").style.borderRadius = phoneList.find(
+          (phoneSelected) => phoneSelected.id === "iphone13Default"
+        ).widgetBorderRadiusMedium;
+        setborderSize("Medium");
+        break;
+      case "largeBtn":
+        document.getElementById("widgets").style.borderRadius = phoneList.find(
+          (phoneSelected) => phoneSelected.id === "iphone13Default"
+        ).widgetBorderRadiusLarge;
+        setborderSize("Large");
         break;
     }
   };
@@ -223,8 +264,10 @@ export default function Home() {
   //-----------------------RETURN----------------------------//
 
   return (
-    <main className=" relative gap-2 overflow-scroll w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-b from-blue-600 to-cyan-600">
-      <h1 className=" text-white text-4xl pt-2">Wallpaper Creator</h1>
+    <main className="mainApp relative gap-2 overflow-scroll w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-b from-grays-900 to-blue-200">
+      <h1 className="titleText text-white text-3xl pt-4">
+        Wallpaper Generator
+      </h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -233,7 +276,7 @@ export default function Home() {
       >
         <div className=" flex flex-row justify-center align-middle p-1">
           <div
-            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100"
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-blue-200 text-slate-900"
             onClick={handleUploadClick}
           >
             <Image
@@ -251,27 +294,45 @@ export default function Home() {
               style={{ display: "none" }}
             />
           </div>
-          <input
-            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 text-xl font-normal"
-            onClick={prepareImage}
-            type="submit"
-            value={"Download"}
-          ></input>
+          <div
+            className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-blue-200 text-slate-900"
+            onClick={handleDownloadClick}
+          >
+            <Image
+              className="uploadImage"
+              priority
+              src={upload}
+              alt="Upload an image"
+            />
+            <h3 className=" text-xl font-normal">Upload</h3>{" "}
+            <input
+              className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 text-xl font-normal"
+              onClick={prepareImage}
+              type="submit"
+              ref={uploadRef}
+              style={{ display: "none" }}
+            ></input>
+          </div>
         </div>
-        <select
-          onChange={handleChangePhone}
-          id="phoneSelect"
-          defaultValue={""}
-          required
-        >
-          <option value="" disabled>
-            Phone Model
-          </option>
-          <option value="iphone13ProMax">iPhone 13 Pro Max</option>
-          <option value="iphone13Pro">iPhone 13 Pro</option>
-          <option value="iphone13">iPhone 13</option>
-          <option value="iphone13Mini">iPhone 13 Mini</option>
-        </select>
+        <div className="p-2">
+          <div className="select">
+            <select
+              onChange={handleChangePhone}
+              id="phoneSelect"
+              defaultValue={""}
+              required
+            >
+              <option value="" disabled>
+                Phone Model
+              </option>
+              <option value="iphone13ProMax">iPhone 13 Pro Max</option>
+              <option value="iphone13Pro">iPhone 13 Pro</option>
+              <option value="iphone13">iPhone 13</option>
+              <option value="iphone13Mini">iPhone 13 Mini</option>
+            </select>
+            <span class="focus"></span>
+          </div>
+        </div>
       </form>
       <div className=" relative w-full h-full flex justify-center align-middle">
         <div
@@ -381,8 +442,16 @@ export default function Home() {
           </div>
         )}
         {menuSelect === "Border Radius" && (
-          <div className=" flex justify-center align-middle flex-row">
-            Border Radius Selector
+          <div className=" flex justify-center align-middle flex-row gap-4">
+            <div id="smallBtn" onClick={borderResize}>
+              Small
+            </div>
+            <div id="mediumBtn" onClick={borderResize}>
+              Med
+            </div>
+            <div id="largeBtn" onClick={borderResize}>
+              Large
+            </div>
           </div>
         )}
       </div>

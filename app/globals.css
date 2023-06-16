@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.mainApp {
+  font-family: "Raleway", sans-serif;
+  font-weight: 100;
+}
+
+.titleText {
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+}
+
 .widgets {
   display: flex;
   align-items: center;
@@ -11,6 +21,7 @@
   position: absolute;
   background: rgba(75, 75, 75, 0.843);
   border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 13px;
   animation: blinker 2s linear infinite;
 }
 
@@ -78,7 +89,8 @@
   border-top-right-radius: 30px;
   bottom: -400px;
   left: 0;
-  background: rgb(109, 109, 109);
+  background: #2a2a2e;
+  box-shadow: 0px -1px 5px 1px #0e0e2268;
   color: white;
   transition: 200ms ease-in;
 }
@@ -98,11 +110,65 @@
 }
 
 .uploadButton {
-  @apply duration-200;
+  transition: 200ms;
 }
 
 .uploadButton:hover {
-  @apply bg-emerald-950 duration-200;
+  background: #abb1c2;
+  transition: 200ms;
+}
+
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+.select {
+  width: 100%;
+  min-width: 15ch;
+  max-width: 30ch;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.1;
+  background-color: rgb(191 219 254);
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+  position: relative;
+}
+
+.select::after {
+  content: "";
+  width: 0.5em;
+  height: 0.4em;
+  background-color: #5e6169;
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  justify-self: end;
+}
+
+select,
+.select:after {
+  grid-area: select;
+}
+
+select:focus + .focus {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 2px solid #5e6169;
+  border-radius: inherit;
 }
 
 @keyframes blinker {

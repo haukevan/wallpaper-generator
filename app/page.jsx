@@ -7,6 +7,7 @@ import rgbHex from "rgb-hex";
 
 import Image from "next/image";
 import upload from "../public/assets/icons/upload.svg";
+import download from "../public/assets/icons/download.svg";
 import leftJustify from "../public/assets/icons/align-left.svg";
 import rightJustify from "../public/assets/icons/align-right.svg";
 import centerJustify from "../public/assets/icons/align-center.svg";
@@ -14,6 +15,7 @@ import close from "../public/assets/icons/close.svg";
 import align from "../public/assets/icons/align.svg";
 import palette from "../public/assets/icons/palette.svg";
 import borderRadius from "../public/assets/icons/border-radius.svg";
+import info from "../public/assets/icons/info.svg";
 
 export default function Home() {
   //export image button ref
@@ -82,6 +84,51 @@ export default function Home() {
       id: "iphone13ProMax",
       width: "1284px",
       height: "2778px",
+      topWidgets: "729px",
+      widgetWidth: "1158px",
+      widgetHeight: "279px",
+      widgetBorderRadiusSmall: "23px", //4.6 increase from default
+      widgetBorderRadiusMedium: "60px",
+      widgetBorderRadiusLarge: "115px",
+    },
+    {
+      id: "iphone14",
+      width: "1170px",
+      height: "2532px",
+      topWidgets: "729px",
+      widgetWidth: "1158px",
+      widgetHeight: "279px",
+      widgetBorderRadiusSmall: "23px", //4.6 increase from default
+      widgetBorderRadiusMedium: "60px",
+      widgetBorderRadiusLarge: "115px",
+    },
+    {
+      //same as 13 pro max
+      id: "iphone14Plus",
+      width: "1284px",
+      height: "2778px",
+      topWidgets: "729px",
+      widgetWidth: "1158px",
+      widgetHeight: "279px",
+      widgetBorderRadiusSmall: "23px", //4.6 increase from default
+      widgetBorderRadiusMedium: "60px",
+      widgetBorderRadiusLarge: "115px",
+    },
+    {
+      id: "iphone14Pro",
+      width: "1179px",
+      height: "2556px",
+      topWidgets: "729px",
+      widgetWidth: "1158px",
+      widgetHeight: "279px",
+      widgetBorderRadiusSmall: "23px", //4.6 increase from default
+      widgetBorderRadiusMedium: "60px",
+      widgetBorderRadiusLarge: "115px",
+    },
+    {
+      id: "iphone14ProMax",
+      width: "1290px",
+      height: "2796px",
       topWidgets: "729px",
       widgetWidth: "1158px",
       widgetHeight: "279px",
@@ -247,6 +294,14 @@ export default function Home() {
     document.querySelector("[data-modal]").close();
   };
 
+  const openInfoModal = () => {
+    document.getElementById("info-modal").showModal();
+  };
+
+  const closeInfoModal = () => {
+    document.getElementById("info-modal").close();
+  };
+
   //design menus
   const openDesignBottom = () => {
     document.getElementById("designBoxBottom").style.bottom = "0";
@@ -265,9 +320,17 @@ export default function Home() {
 
   return (
     <main className="mainApp relative gap-2 overflow-scroll w-screen h-screen flex flex-col items-center justify-start bg-gradient-to-b from-grays-900 to-blue-200">
-      <h1 className="titleText text-white text-3xl pt-4">
+      <div
+        info-open-modal
+        className=" absolute top-4 right-4"
+        onClick={openInfoModal}
+      >
+        <Image src={info} alt="information"></Image>
+      </div>
+      <h1 className="titleText text-white text-2xl pt-4">
         Wallpaper Generator
       </h1>
+      <p className="text-s text-center text-white">for iPhone</p>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -299,12 +362,12 @@ export default function Home() {
             onClick={handleDownloadClick}
           >
             <Image
-              className="uploadImage"
+              className=""
               priority
-              src={upload}
-              alt="Upload an image"
+              src={download}
+              alt="Download your image"
             />
-            <h3 className=" text-xl font-normal">Upload</h3>{" "}
+            <h3 className=" text-xl font-normal">Download</h3>{" "}
             <input
               className="uploadButton w-fit h-fit m-1 p-3 flex flex-row justify-center align-middle rounded-xl bg-emerald-800 text-slate-100 text-xl font-normal"
               onClick={prepareImage}
@@ -325,6 +388,10 @@ export default function Home() {
               <option value="" disabled>
                 Phone Model
               </option>
+              <option value="iphone14ProMax">iPhone 14 Pro Max</option>
+              <option value="iphone14Pro">iPhone 14 Pro</option>
+              <option value="iphone14Plus">iPhone 14 Plus</option>
+              <option value="iphone14">iPhone 14</option>
               <option value="iphone13ProMax">iPhone 13 Pro Max</option>
               <option value="iphone13Pro">iPhone 13 Pro</option>
               <option value="iphone13">iPhone 13</option>
@@ -367,7 +434,7 @@ export default function Home() {
             {menuText}
           </div>
           <div
-            className=" absolute top-5 right-5"
+            className=" absolute top-5 right-5 cursor-pointer"
             id="closeDesignBoxBottom"
             onClick={closeDesignBoxBottom}
           >
@@ -387,7 +454,7 @@ export default function Home() {
             checked={menuSelect === "Align Image"}
             onChange={(e) => menuSelectHandler("Align Image")}
           />
-          <label className="label_item" htmlFor="radio1">
+          <label className="label_item cursor-pointer" htmlFor="radio1">
             <Image src={align} alt="Align image" />
           </label>
           <input
@@ -399,7 +466,7 @@ export default function Home() {
             checked={menuSelect === "Select Color"}
             onChange={(e) => menuSelectHandler("Select Color")}
           />
-          <label className="label_item" htmlFor="radio2">
+          <label className="label_item cursor-pointer" htmlFor="radio2">
             <Image src={palette} alt="Pick color" />
           </label>
           <input
@@ -411,25 +478,55 @@ export default function Home() {
             checked={menuSelect === "Border Radius"}
             onChange={(e) => menuSelectHandler("Border Radius")}
           />
-          <label className="label_item" htmlFor="radio3">
+          <label className="label_item cursor-pointer" htmlFor="radio3">
             <Image src={borderRadius} alt="Border Radius" />
           </label>
         </div>
         {menuSelect === "Align Image" && (
           <div className=" flex justify-center align-middle flex-row">
-            <div onClick={alignClick}>
-              <Image id="leftBtn" src={leftJustify} alt="Align image left" />
-            </div>
-            <div onClick={alignClick}>
+            <input
+              type="radio"
+              className="radio_item"
+              value="leftAlign"
+              name="align"
+              id="leftBtn"
+              onChange={alignClick}
+            />
+            <label className="label_item cursor-pointer" htmlFor="leftBtn">
+              <Image id="leftBtnPic" src={leftJustify} alt="Align image left" />
+            </label>
+
+            <input
+              type="radio"
+              className="radio_item"
+              value="centerAlign"
+              name="align"
+              id="centerBtn"
+              onChange={alignClick}
+            />
+            <label className="label_item cursor-pointer" htmlFor="centerBtn">
               <Image
-                id="centerBtn"
+                id="centerBtnPic"
                 src={centerJustify}
                 alt="Align image center"
               />
-            </div>
-            <div onClick={alignClick}>
-              <Image id="rightBtn" src={rightJustify} alt="Align image right" />
-            </div>
+            </label>
+
+            <input
+              type="radio"
+              className="radio_item"
+              value="rightAlign"
+              name="align"
+              id="rightBtn"
+              onChange={alignClick}
+            />
+            <label className="label_item cursor-pointer" htmlFor="rightBtn">
+              <Image
+                id="rightBtnPic"
+                src={rightJustify}
+                alt="Align image right"
+              />
+            </label>
           </div>
         )}
         {menuSelect === "Select Color" && (
@@ -443,13 +540,25 @@ export default function Home() {
         )}
         {menuSelect === "Border Radius" && (
           <div className=" flex justify-center align-middle flex-row gap-4">
-            <div id="smallBtn" onClick={borderResize}>
+            <div
+              id="smallBtn"
+              className=" cursor-pointer"
+              onClick={borderResize}
+            >
               Small
             </div>
-            <div id="mediumBtn" onClick={borderResize}>
+            <div
+              id="mediumBtn"
+              className=" cursor-pointer"
+              onClick={borderResize}
+            >
               Med
             </div>
-            <div id="largeBtn" onClick={borderResize}>
+            <div
+              id="largeBtn"
+              className=" cursor-pointer"
+              onClick={borderResize}
+            >
               Large
             </div>
           </div>
@@ -490,6 +599,29 @@ export default function Home() {
           Close
         </button>
       </dialog>
+      <dialog id="info-modal" className=" w-3/4 rounded-md bg-gray-200">
+        <h2 className="text-center text-2xl">What is Wallpaper Generator?</h2>
+        <br></br>
+        <p>
+          Wallpaper Generator lets you personalize your iPhone lockscreen
+          wallpaper by giving you the tools to customize the area around your
+          widgets, and more!
+        </p>
+        <br></br>
+        <p>
+          Upload a photo and adjust the design to your liking, select your phone
+          size, and download!
+        </p>
+        <br />
+        <button info-close-modal onClick={closeInfoModal}>
+          Close
+        </button>
+      </dialog>
+      <footer className=" opacity-50 bg-grays-900 w-screen fixed z-10 bottom-0">
+        <p className=" text-white text-center text-xs p-1">
+          Created by: Evan Hauk - 2023 all rights reserved.
+        </p>
+      </footer>
     </main>
   );
 }

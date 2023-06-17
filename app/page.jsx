@@ -16,6 +16,7 @@ import align from "../public/assets/icons/align.svg";
 import palette from "../public/assets/icons/palette.svg";
 import borderRadius from "../public/assets/icons/border-radius.svg";
 import info from "../public/assets/icons/info.svg";
+import iphone from "../public/assets/images/iphone14wallpaper.jpg";
 
 export default function Home() {
   //export image button ref
@@ -96,7 +97,7 @@ export default function Home() {
       width: "1170px",
       height: "2532px",
       topWidgets: "729px",
-      widgetWidth: "1158px",
+      widgetWidth: "1000px",
       widgetHeight: "279px",
       widgetBorderRadiusSmall: "23px", //4.6 increase from default
       widgetBorderRadiusMedium: "60px",
@@ -119,7 +120,7 @@ export default function Home() {
       width: "1179px",
       height: "2556px",
       topWidgets: "729px",
-      widgetWidth: "1158px",
+      widgetWidth: "1050px",
       widgetHeight: "279px",
       widgetBorderRadiusSmall: "23px", //4.6 increase from default
       widgetBorderRadiusMedium: "60px",
@@ -419,7 +420,14 @@ export default function Home() {
               id="output"
             ></div>
           ) : (
-            <div className="bkg-img" id="output"></div>
+            <Image
+              src={iphone}
+              width={400}
+              height={400}
+              alt="iphone default photo"
+              className="bkg-img"
+              id="output"
+            />
           )}
           <div className="widgets" id="widgets" onClick={openDesignBottom}>
             select to edit
